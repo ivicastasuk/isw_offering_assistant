@@ -1,0 +1,94 @@
+{
+  "name": "isw-offering-assistant",
+  "version": "1.0.0",
+  "description": "ISW Offering Assistant - Desktop aplikacija za upravljanje ponudama i prodajom",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win",
+    "build-win-portable": "electron-builder --win portable",
+    "dist": "npm run build",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "author": {
+    "name": "ISW Software",
+    "email": "info@isw.rs"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ivicastasuk/isw_offering_assistant",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ivicastasuk/isw_offering_assistant.git"
+  },
+  "keywords": [
+    "electron",
+    "business",
+    "offers",
+    "sales",
+    "management",
+    "desktop"
+  ],
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "axios": "^1.7.2"
+  },
+  "build": {
+    "appId": "rs.isw.offering-assistant",
+    "productName": "ISW Offering Assistant",
+    "copyright": "Copyright © 2025 ISW Software",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "requestedExecutionLevel": "asInvoker",
+      "publisherName": "ISW Software"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ISW Offering Assistant",
+      "include": "installer.nsh"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    },
+    "compression": "maximum",
+    "asar": true
+  }
+}

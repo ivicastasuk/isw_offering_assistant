@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:;">
+    <title>ISW Offering Assistant</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Učitavanje...</p>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="logo">
+                        <i class="fas fa-building"></i>
+                        <h1>ISW Offering Assistant</h1>
+                    </div>
+                    
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="username">Korisničko ime:</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Šifra:</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Prijaviţe se
+                        </button>
+                    </form>
+                    
+                    <div class="login-footer">
+                        <p>ISW Trading d.o.o. - Pomoćni alat za ponude</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Application -->
+        <div id="main-screen" class="screen">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <h1><i class="fas fa-building"></i> ISW Offering Assistant</h1>
+                </div>
+                <div class="header-right">
+                    <span class="user-info">
+                        <i class="fas fa-user"></i>
+                        <span id="current-user">Loading...</span>
+                    </span>
+                    <button id="logout-btn" class="btn btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i> Odjaviţe se
+                    </button>
+                </div>
+            </header>
+
+            <div class="app-content">
+                <!-- Sidebar Navigation -->
+                <nav class="sidebar">
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#offers" class="nav-link" data-section="offers">
+                                <i class="fas fa-file-contract"></i>
+                                <span>Ponude</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#clients" class="nav-link" data-section="clients">
+                                <i class="fas fa-users"></i>
+                                <span>Klijenti</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#products" class="nav-link" data-section="products">
+                                <i class="fas fa-box"></i>
+                                <span>Proizvodi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#sales" class="nav-link" data-section="sales">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Prodaja</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#incoming-documents" class="nav-link" data-section="incoming-documents">
+                                <i class="fas fa-file-import"></i>
+                                <span>Ulazni dokumenti</span>
+                            </a>
+                        </li>
+                        <li class="admin-only" style="display: none;">
+                            <a href="#users" class="nav-link" data-section="users">
+                                <i class="fas fa-user-cog"></i>
+                                <span>Korisnici</span>
+                            </a>
+                        </li>
+                        <li class="admin-only" style="display: none;">
+                            <a href="#company" class="nav-link" data-section="company">
+                                <i class="fas fa-building"></i>
+                                <span>Podaci o firmi</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Main Content Area -->
+                <main class="main-content">
+                    <!-- Dashboard Section -->
+                    <section id="dashboard-section" class="content-section active">
+                        <div class="section-header">
+                            <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                        </div>
+                        <div class="dashboard-content">
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-file-contract"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-offers">0</h3>
+                                        <p>Ukupno ponuda</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-clients">0</h3>
+                                        <p>Ukupno klijenata</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-products">0</h3>
+                                        <p>Ukupno proizvoda</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-sales">0</h3>
+                                        <p>Ukupno prodaja</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="recent-activity">
+                                <h3>Poslednje aktivnosti</h3>
+                                <div id="recent-offers" class="activity-list">
+                                    <!-- Dinamički sadržaj -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Offers Section -->
+                    <section id="offers-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-file-contract"></i> Ponude</h2>
+                            <button id="new-offer-btn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Nova ponuda
+                            </button>
+                        </div>
+                        
+                        <div class="filters-bar">
+                            <div class="filter-group">
+                                <input type="text" id="offers-search" placeholder="Pretraži ponude..." class="search-input">
+                            </div>
+                            <div class="filter-group">
+                                <select id="offers-status-filter">
+                                    <option value="">Svi statusi</option>
+                                    <option value="draft">Nacrt</option>
+                                    <option value="locked">Zaključano</option>
+                                    <option value="past">Prošla</option>
+                                    <option value="rejected">Odbijena</option>
+                                    <option value="questionable">Pod znakom pitanja</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table id="offers-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Broj ponude</th>
+                                        <th>Klijent</th>
+                                        <th>Kreator</th>
+                                        <th>Datum kreiranja</th>
+                                        <th>Status</th>
+                                        <th>Ukupan iznos</th>
+                                        <th>Akcije</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dinamički sadržaj -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="pagination">
+                            <button id="offers-prev-page" class="btn btn-secondary">Prethodna</button>
+                            <span id="offers-page-info">Strana 1 od 1</span>
+                            <button id="offers-next-page" class="btn btn-secondary">Sledeća</button>
+                        </div>
+                    </section>
+
+                    <!-- Clients Section -->
+                    <section id="clients-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-users"></i> Klijenti</h2>
+                            <button id="new-client-btn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Novi klijent
+                            </button>
+                        </div>
+                        
+                        <div class="filters-bar">
+                            <div class="filter-group">
+                                <input type="text" id="clients-search" placeholder="Pretraži klijente..." class="search-input">
+                            </div>
+                            <div class="filter-group">
+                                <select id="clients-active-filter">
+                                    <option value="">Svi klijenti</option>
+                                    <option value="true" selected>Aktivni</option>
+                                    <option value="false">Neaktivni</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table id="clients-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Naziv firme</th>
+                                        <th>Grad</th>
+                                        <th>Email</th>
+                                        <th>Telefon</th>
+                                        <th>PIB</th>
+                                        <th>Status</th>
+                                        <th>Akcije</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dinamički sadržaj -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Products Section -->
+                    <section id="products-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-box"></i> Proizvodi</h2>
+                            <div class="header-actions">
+                                <button id="new-product-group-btn" class="btn btn-secondary">
+                                    <i class="fas fa-plus"></i> Nova grupa
+                                </button>
+                                <button id="new-product-btn" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Novi proizvod
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="filters-bar">
+                            <div class="filter-group">
+                                <input type="text" id="products-search" placeholder="Pretraži proizvode..." class="search-input">
+                            </div>
+                            <div class="filter-group">
+                                <select id="products-group-filter">
+                                    <option value="">Sve grupe</option>
+                                    <!-- Dinamički sadržaj -->
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <select id="products-active-filter">
+                                    <option value="">Svi proizvodi</option>
+                                    <option value="true" selected>Aktivni</option>
+                                    <option value="false">Neaktivni</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table id="products-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Šifra</th>
+                                        <th>Naziv</th>
+                                        <th>Proizvođač</th>
+                                        <th>Grupa</th>
+                                        <th>Cena</th>
+                                        <th>Status</th>
+                                        <th>Akcije</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dinamički sadržaj -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Other sections will be added dynamically -->
+                    <section id="sales-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-chart-line"></i> Evidencija prodaje</h2>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Sekcija za evidenciju prodaje će biti implementirana...</p>
+                        </div>
+                    </section>
+
+                    <section id="incoming-documents-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-file-import"></i> Ulazni dokumenti</h2>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Sekcija za ulazne dokumente će biti implementirana...</p>
+                        </div>
+                    </section>
+
+                    <section id="users-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-user-cog"></i> Korisnici</h2>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Sekcija za upravljanje korisnicima će biti implementirana...</p>
+                        </div>
+                    </section>
+
+                    <section id="company-section" class="content-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-building"></i> Podaci o firmi</h2>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Sekcija za podatke o firmi će biti implementirana...</p>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal container -->
+    <div id="modal-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/offers.js"></script>
+    <script src="js/clients.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

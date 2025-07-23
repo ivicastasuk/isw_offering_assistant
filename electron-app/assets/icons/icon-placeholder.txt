@@ -1,0 +1,39 @@
+# Ovaj fajl predstavlja osnovnu ikonu za ISW Offering Assistant
+# U produkciji treba zameniti sa stvarnim .ico fajlom
+
+# Icon requirements:
+# - icon.ico: 256x256px Windows icon format
+# - installer-banner.bmp: 164x314px bitmap for installer wizard
+# - installer-header.bmp: 150x57px bitmap for installer header
+
+# Colors: 
+# Primary: #007bff (blue)
+# Secondary: #6c757d (gray)
+# Success: #28a745 (green)
+# Warning: #ffc107 (yellow)
+# Danger: #dc3545 (red)
+
+# Suggested design elements:
+# - Document/offer icon
+# - Business/corporate look
+# - Modern flat design
+# - ISW letters or full logo
+# - Professional appearance
+
+# Tools for icon creation:
+# - GIMP (free)
+# - Paint.NET (free)
+# - Adobe Illustrator/Photoshop
+# - Online icon generators
+
+# Icon sizes needed:
+# 16x16, 32x32, 48x48, 64x64, 128x128, 256x256
+
+PLACEHOLDER_ICON_DESCRIPTION="""
+Main application icon should represent:
+- Business/office theme
+- Document management
+- Professional appearance
+- Clear visibility at small sizes
+- Windows-compatible .ico format
+"""
