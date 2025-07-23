@@ -1,2 +1,4 @@
 # isw_offering_assistant
-Aplikacija za rad sa ponudama, sa sopstvenom bazom proizvoda, klijenata, postojecis ponuda, itd.
+> Aplikacija za rad sa ponudama, sa sopstvenom bazom proizvoda, klijenata, postojecis ponuda, itd.
+
+[![License](https://img.shields.io/badge/License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
